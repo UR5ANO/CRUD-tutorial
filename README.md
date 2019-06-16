@@ -1,5 +1,11 @@
 # CRUD-tutorial
 
+## Run command
+
+```
+python -m main
+```
+
 ## How to configure database?
 
 1. Create `config/` directory.
