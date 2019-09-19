@@ -1,7 +1,7 @@
 import psycopg2
 
 from config.db import db_conf
-from db_utils import select, insert, update, delete
+from main.db_utils import select, insert, update, delete
 
 
 def main():
