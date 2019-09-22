@@ -81,4 +81,10 @@ def delete(
 		True, если пользователь с таким `id` существует и был удален,
 		иначе False 
 	"""
-	raise NotImplementedError()
+	cur = None
+	try:
+		cur = conn.cursor()
+		cur.execute("delete from users where id = {}".format(id))
+		return cur.rowcount > 0
+	finally:
+		cur.close()

@@ -8,6 +8,7 @@ def main():
 	conn = None
 	try:
 		conn = psycopg2.connect(**db_conf)
+		conn.autocommit = True
 		while True:
 			s = input("Enter command:")
 			if s == "exit":
