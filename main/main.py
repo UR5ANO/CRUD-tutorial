@@ -1,14 +1,11 @@
-import psycopg2
-
 from config.db import db_conf
-from main.db_utils import select, insert, update, delete
+from main.db_utils import db_connect, select, insert, update, delete
 
 
 def main():
 	conn = None
 	try:
-		conn = psycopg2.connect(**db_conf)
-		conn.autocommit = True
+		conn = db_connect(db_conf)
 		while True:
 			s = input("Enter command:")
 			if s == "exit":
@@ -19,8 +16,8 @@ def main():
 				_, name, password = s.split()
 				print(insert(conn, name, password))
 			elif s.startswith("update"):
-				_, id, name, password = s.split()
-				print(update(conn, id, name, password))
+				_, id, field_name, field_value = s.split()
+				print(update(conn, id, field_name, field_value))
 			elif s.startswith("delete"):
 				_, id = s.split()
 				print(delete(conn, id))

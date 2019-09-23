@@ -3,6 +3,12 @@ import psycopg2
 from typing import List
 
 
+def db_connect(db_conf):
+	conn = psycopg2.connect(**db_conf)
+	conn.autocommit = True
+	return conn
+
+
 def select(
 	conn: psycopg2.extensions.connection,
 ) -> List[tuple]:

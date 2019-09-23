@@ -1,15 +1,13 @@
-import psycopg2
 import unittest
 
 from config.db import test_db_conf
-from main.db_utils import select, insert, update, delete
+from main.db_utils import db_connect, select, insert, update, delete
 
 
 class SelectTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.conn = psycopg2.connect(**test_db_conf)
-        self.conn.autocommit = True
+        self.conn = db_connect(test_db_conf)
         cur = self.conn.cursor()
         cur.execute("insert into users(name, password) values ('roma', '111'), ('vova', '777')")
         cur.close()
@@ -31,8 +29,7 @@ class SelectTestCase(unittest.TestCase):
 class InsertOneRowTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.conn = psycopg2.connect(**test_db_conf)
-        self.conn.autocommit = True
+        self.conn = db_connect(test_db_conf)
 
     def tearDown(self):
         cur = self.conn.cursor()
@@ -52,8 +49,7 @@ class InsertOneRowTestCase(unittest.TestCase):
 class InsertMultipleRowsTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.conn = psycopg2.connect(**test_db_conf)
-        self.conn.autocommit = True
+        self.conn = db_connect(test_db_conf)
 
     def tearDown(self):
         cur = self.conn.cursor()
@@ -76,8 +72,7 @@ class InsertMultipleRowsTestCase(unittest.TestCase):
 class UpdateNonExistingUserTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.conn = psycopg2.connect(**test_db_conf)
-        self.conn.autocommit = True
+        self.conn = db_connect(test_db_conf)
 
     def tearDown(self):
         cur = self.conn.cursor()
@@ -94,8 +89,7 @@ class UpdateNonExistingUserTestCase(unittest.TestCase):
 class UpdateExistingUserTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.conn = psycopg2.connect(**test_db_conf)
-        self.conn.autocommit = True
+        self.conn = db_connect(test_db_conf)
 
         cur = self.conn.cursor()
         cur.execute("insert into users(name, password) values ('roma', '111') returning id")
@@ -121,8 +115,7 @@ class UpdateExistingUserTestCase(unittest.TestCase):
 class DeleteNonExistingUserTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.conn = psycopg2.connect(**test_db_conf)
-        self.conn.autocommit = True
+        self.conn = db_connect(test_db_conf)
 
     def tearDown(self):
         cur = self.conn.cursor()
@@ -137,8 +130,7 @@ class DeleteNonExistingUserTestCase(unittest.TestCase):
 class DeleteExistingUserTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.conn = psycopg2.connect(**test_db_conf)
-        self.conn.autocommit = True
+        self.conn = db_connect(test_db_conf)
 
         cur = self.conn.cursor()
         cur.execute("insert into users(name, password) values ('roma', '111') returning id")
