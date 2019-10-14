@@ -46,7 +46,13 @@ def insert(
     Возвращаемое значение:
         одно число - id добавленного пользователя
     """
-    raise NotImplementedError()
+    cur = None
+    try:
+        cur = conn.cursor()
+        cur.execute("insert into users(name, password) values ('" + name + "', '" + password + "') returning id")
+        return cur.fetchone()[0]
+    finally:
+        cur.close()
 
 
 def update(
